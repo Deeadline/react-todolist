@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Layout from "../layout/layout";
+import { Layout } from "./Shared/Layout";
 
 class App extends Component {
 	render() {
-		return <><Layout/></>;
+		return <Layout />;
 	}
 }
 

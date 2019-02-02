@@ -1,5 +1,6 @@
 import React from "react";
 import datefns from "date-fns";
+import styled from 'styled-components';
 
 export const CalendarCells = ({
 	current,

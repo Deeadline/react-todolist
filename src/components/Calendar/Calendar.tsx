@@ -1,10 +1,18 @@
 import React from "react";
 import datefns from "date-fns";
+import styled from "styled-components";
 import { CalendarHeader } from "../Calendar/CalendarHeader";
 import { CalendarDays } from "../Calendar/CalendarDays";
 import { CalendarCells } from "../Calendar/CalendarCells";
 
-class Calendar extends React.Component {
+const CalendarWrapper = styled.section`
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto 1fr;
+	grid-gap: 15px;
+`;
+
+export class Calendar extends React.Component {
 	state = {
 		currentMonth: new Date(),
 		selectedDate: new Date(),
@@ -27,7 +35,7 @@ class Calendar extends React.Component {
 	}
 	render() {
 		return (
-			<div className="calendar">
+			<CalendarWrapper>
 				<CalendarHeader
 					prev={this.prevMonth}
 					current={this.state.currentMonth}
@@ -39,9 +47,7 @@ class Calendar extends React.Component {
 					selected={this.state.selectedDate}
 					dateSelected={this.onDateClick}
 				/>
-			</div>
+			</CalendarWrapper>
 		);
 	}
 }
-
-export default Calendar;
