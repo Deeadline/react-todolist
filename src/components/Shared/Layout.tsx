@@ -1,36 +1,41 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Header } from "../Header/Header";
-import { Container } from "../Shared/Container";
-import { Home } from "../Home";
+import { Main } from "../Main/Main";
+import { Footer } from "../Footer/Footer";
+import { theme } from "../../utils/theme";
+import Login from "../Login/Login";
 
 const GlobalStyle = createGlobalStyle`
 *,*::after,*::before {
-	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
 }
 
 html, body, #root {
-	width: 100%;
-	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat';
+	color: white;
 }
 `;
 
 export const Layout = ({ children }: any) => {
 	return (
-		<Router>
-			<>
-				<GlobalStyle />
-				<Header />
-				<Container as="main">
-					<Route exact path="/" component={Home} />
-					{/* <Route path="/register" component={Register}/> */}
-					{/* <Route path="/login" component={Login}/> */}
-					{/* <Route path="/calendar" component={Calendar} /> */}
-				</Container>
-			</>
-		</Router>
+		<ThemeProvider theme={theme}>
+			<Router>
+				<>
+					<GlobalStyle />
+					<Header />
+					<Main>
+						<Route path="/" component={Login} />
+					</Main>
+					<Footer />
+				</>
+			</Router>
+		</ThemeProvider>
 	);
 };

@@ -1,29 +1,38 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { Component } from "react";
 import styled from "styled-components";
-import { Container } from "../Shared/Container";
+import { Navigation } from "../Navigation/Navigation";
 
 const HeaderWrapper = styled.header`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	width: 100%;
-	padding: 1rem 0;
-	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-	margin-bottom: 2rem;
+	padding: 0 1rem;
+	box-shadow: 0 0 5px 0 rgba(33, 40, 51, 1);
 	text-align: center;
-	background: #ddd;
+	background-color: ${({ theme }) => theme.color.secondary};
+	height: 80px;
 `;
 
-export const Header = () => (
-	<HeaderWrapper>
-		<Container>
-			<h1>Todo Application</h1>
-			<ul>
-				<li>
-					<Link to="/">Home</Link>
-				</li>
-				<li>
-					<Link to="/calendar">Calendar</Link>
-				</li>
-			</ul>
-		</Container>
-	</HeaderWrapper>
-);
+const Title = styled.h1`
+	text-align: center;
+	font-size: 2rem;
+	font-weight: ${({ theme }) => theme.font.bold};
+}
+`;
+const TitleApp = styled.span`
+	font-weight: ${({ theme }) => theme.font.thin};
+`;
+
+export class Header extends Component {
+	render() {
+		return (
+			<HeaderWrapper>
+				<Title>
+					TODO<TitleApp>APP</TitleApp>
+				</Title>
+				<Navigation />
+			</HeaderWrapper>
+		);
+	}
+}

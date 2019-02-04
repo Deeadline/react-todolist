@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import datefns from "date-fns";
 import styled from "styled-components";
 import { CalendarHeader } from "../Calendar/CalendarHeader";
@@ -12,7 +12,7 @@ const CalendarWrapper = styled.section`
 	grid-gap: 15px;
 `;
 
-export class Calendar extends React.Component {
+export class Calendar extends Component {
 	state = {
 		currentMonth: new Date(),
 		selectedDate: new Date(),

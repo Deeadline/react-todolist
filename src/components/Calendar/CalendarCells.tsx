@@ -1,6 +1,12 @@
 import React from "react";
 import datefns from "date-fns";
-import styled from 'styled-components';
+import styled from "styled-components";
+
+const Cell = styled.div``;
+const CellBig = styled.span``;
+const CellNumber = styled.span``;
+const CellWrapper = styled.div``;
+const RowCell = styled.div``;
 
 export const CalendarCells = ({
 	current,
@@ -28,7 +34,7 @@ export const CalendarCells = ({
 			formattedDate = datefns.format(day, dateFormat);
 			const cloneDay = day;
 			days.push(
-				<div
+				<Cell
 					className={`col cell ${
 						!datefns.isSameMonth(day, monthStart)
 							? "disabled"
@@ -39,18 +45,18 @@ export const CalendarCells = ({
 					key={day.toDateString()}
 					onClick={dateSelected.bind(null, datefns.parse(cloneDay))}
 				>
-					<span className="number">{formattedDate}</span>
-					<span className="bg">{formattedDate}</span>
-				</div>
+					<CellNumber>{formattedDate}</CellNumber>
+					<CellBig>{formattedDate}</CellBig>
+				</Cell>
 			);
 			day = datefns.addDays(day, 1);
 		}
 		rows.push(
-			<div className="row" key={day.toDateString()}>
+			<RowCell className="row" key={day.toDateString()}>
 				{days}
-			</div>
+			</RowCell>
 		);
 		days = [];
 	}
-	return <div className="body">{rows}</div>;
+	return <CellWrapper>{rows}</CellWrapper>;
 };
