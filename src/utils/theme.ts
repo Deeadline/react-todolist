@@ -1,14 +1,26 @@
-import { color } from "./color";
+import * as styledComponents from "styled-components";
 
-export const theme = {
-	color,
-	font: {
-		thin: 300,
-		regular: 400,
-		bold: 800,
-	},
-	media: {
-		tablet: `@media (min-width: 768px)`,
-		desktop: `@media (min-width: 1024px)`,
-	},
-};
+import { ThemeInterface } from "../interfaces/theme.interface";
+
+import { colors } from "./colors";
+import { fonts } from "./fonts";
+import { media } from "./media";
+
+export const Theme = ({
+	colors,
+	fonts,
+	media,
+} as unknown) as ThemeInterface;
+
+const {
+	default: styled,
+	css,
+	createGlobalStyle,
+	keyframes,
+	ThemeProvider,
+} = styledComponents as styledComponents.ThemedStyledComponentsModule<
+	ThemeInterface
+>;
+
+export { css, createGlobalStyle, keyframes, ThemeProvider };
+export default styled;

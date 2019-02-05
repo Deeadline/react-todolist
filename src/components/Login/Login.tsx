@@ -1,42 +1,73 @@
-import React, { Component } from "react";
-import { Form, FormContent, FormWrapper } from "../Shared/Form";
+import React, { Component, FormEvent, ChangeEvent } from "react";
+import { Link } from "react-router-dom";
+import styled from "../../utils/theme";
 import { login } from "../../config/firebase";
-import { Input } from "../Shared/Input";
-import { Label } from "../Shared/Label";
-import { PrimaryButton } from "../Shared/Button";
-import styled from "styled-components";
 
-const ForgotPassword = styled.p`
-	font-weight: ${({ theme }) => theme.font.thin};
-	font-size: 1rem;
-	padding: 0.4rem;
+import { initialLoginState } from "../../interfaces/login.interface";
+
+import { Form, FormContent, FormWrapper } from "../Shared/form";
+import { Input } from "../Shared/input";
+import { Label } from "../Shared/label";
+import { PrimaryButton, BigButton } from "../Shared/button";
+
+const LoginText = styled.p`
+	font-weight: ${({ theme }) => theme.fonts.bold};
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	margin: 2rem 0;
+	text-align: center;
 `;
 
-class Login extends Component {
-	state = {
-		email: "",
-		password: "",
-		error: null,
-	};
-
-	handleSubmit = (event: any) => {
-		event.prevendDefault();
-		const { email, password } = this.state;
-		login(email, password).catch(error =>
-			this.setState({ error: error.message })
-		);
+const ForgotPassword = styled(Link)`
+	font-weight: ${({ theme }) => theme.fonts.thin};
+	font-size: 0.75rem;
+	padding: 0.5rem;
+	margin: 0.5rem;
+	text-align: right;
+	color: white;
+	text-decoration: none;
+	&:hover {
+		color: ${({ theme }) => theme.colors.third};
+		cursor: pointer;
 	}
-	setEmail = (event: any) => {
+`;
+
+const RegisterText = styled.p`
+	font-weight: ${({ theme }) => theme.fonts.thin};
+	font-size: 0.9rem;
+	padding: 0.5rem;
+`;
+
+const LinkButton = styled(Link)`
+	text-decoration: none;
+	margin: 0.5rem;
+`;
+
+type State = typeof initialLoginState;
+
+type Props = {};
+
+export class Login extends Component<Props, State> {
+	state = initialLoginState;
+
+	handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+		event.preventDefault();
+		const { email, password } = this.state;
+		login(email, password).catch(({ message }: { message: string }) => {
+			return this.setState({ error: message });
+		});
+	}
+	setEmail = (event: ChangeEvent<HTMLInputElement>): void => {
 		this.setState({ email: event.target.value });
 	}
-	setPassword = (event: any) => {
+	setPassword = (event: ChangeEvent<HTMLInputElement>): void => {
 		this.setState({ password: event.target.value });
 	}
 
 	render() {
 		return (
 			<FormWrapper>
-				<p>Login to application!</p>
+				<LoginText>Login to application!</LoginText>
 				<Form onSubmit={this.handleSubmit}>
 					<FormContent>
 						<Label htmlFor="email">E-mail</Label>
@@ -47,6 +78,7 @@ class Login extends Component {
 							placeholder="Enter login"
 							value={this.state.email}
 							onChange={this.setEmail}
+							required
 						/>
 					</FormContent>
 					<FormContent>
@@ -58,16 +90,23 @@ class Login extends Component {
 							value={this.state.password}
 							onChange={this.setPassword}
 							placeholder="Enter password"
+							required
 						/>
 					</FormContent>
+					<ForgotPassword to="register">
+						Forgot password?
+					</ForgotPassword>
 					<FormContent>
-						<ForgotPassword>Forgot password?</ForgotPassword>
-						<PrimaryButton>Login</PrimaryButton>
+						<BigButton>Sign In</BigButton>
 					</FormContent>
 				</Form>
+				<FormContent>
+					<RegisterText>Don't have account?</RegisterText>
+					<LinkButton to="register">
+						<PrimaryButton>Register</PrimaryButton>
+					</LinkButton>
+				</FormContent>
 			</FormWrapper>
 		);
 	}
 }
-
-export default Login;

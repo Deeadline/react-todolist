@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { Header } from "../Header/Header";
-import { Main } from "../Main/Main";
-import { Footer } from "../Footer/Footer";
-import { theme } from "../../utils/theme";
-import Login from "../Login/Login";
+import { Theme, createGlobalStyle, ThemeProvider } from "../../utils/theme";
 
-const GlobalStyle = createGlobalStyle`
+import { Header } from "../Header/header";
+import { Main } from "../Main/main";
+import { Footer } from "../Footer/footer";
+import { Login } from "../Login/login";
+import { Register } from "../Register/register";
+
+export const GlobalStyle = createGlobalStyle`
 *,*::after,*::before {
 	box-sizing: border-box;
 }
@@ -18,20 +19,22 @@ html, body, #root {
 	flex-direction: column;
 	margin: 0;
 	padding: 0;
-	font-family: 'Montserrat';
+	font-family: 'Montserrat', sans-serif;
 	color: white;
+	letter-spacing: 0.8px;
 }
 `;
 
 export const Layout = ({ children }: any) => {
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={Theme}>
 			<Router>
 				<>
 					<GlobalStyle />
 					<Header />
 					<Main>
-						<Route path="/" component={Login} />
+						<Route path="/login" component={Login} />
+						<Route path="/register" component={Register} />
 					</Main>
 					<Footer />
 				</>

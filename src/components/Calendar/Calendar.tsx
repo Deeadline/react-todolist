@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import styled from "../../utils/theme";
 import datefns from "date-fns";
-import styled from "styled-components";
-import { CalendarHeader } from "../Calendar/CalendarHeader";
-import { CalendarDays } from "../Calendar/CalendarDays";
-import { CalendarCells } from "../Calendar/CalendarCells";
+
+import { initialCalendarState } from "../../interfaces/calendar.interface";
+
+import { CalendarHeader } from "./calendar-header";
+import { CalendarDays } from "./calendar-days";
+import { CalendarCells } from "./calendar-cells";
 
 const CalendarWrapper = styled.section`
 	display: grid;
@@ -12,11 +15,11 @@ const CalendarWrapper = styled.section`
 	grid-gap: 15px;
 `;
 
-export class Calendar extends Component {
-	state = {
-		currentMonth: new Date(),
-		selectedDate: new Date(),
-	};
+type State = typeof initialCalendarState;
+type Props = {};
+
+export class Calendar extends Component<Props, State> {
+	state = initialCalendarState;
 
 	onDateClick = (day: Date) => {
 		this.setState({
@@ -37,7 +40,7 @@ export class Calendar extends Component {
 		return (
 			<CalendarWrapper>
 				<CalendarHeader
-					prev={this.prevMonth}
+					previous={this.prevMonth}
 					current={this.state.currentMonth}
 					next={this.nextMonth}
 				/>
@@ -45,7 +48,7 @@ export class Calendar extends Component {
 				<CalendarCells
 					current={this.state.currentMonth}
 					selected={this.state.selectedDate}
-					dateSelected={this.onDateClick}
+					onDateSelected={this.onDateClick}
 				/>
 			</CalendarWrapper>
 		);

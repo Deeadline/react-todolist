@@ -1,6 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { PrimaryButton } from "../Shared/Button";
+import styled from "../../utils/theme";
+
+import { PrimaryButton } from "../Shared/button";
 
 const NavigationWrapper = styled.nav`
 	padding: 1rem 0;

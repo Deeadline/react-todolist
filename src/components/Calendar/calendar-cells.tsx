@@ -1,6 +1,8 @@
 import React from "react";
+import styled from "../../utils/theme";
 import datefns from "date-fns";
-import styled from "styled-components";
+
+import { CalendarCellsProps } from "../../interfaces/calendar.interface";
 
 const Cell = styled.div``;
 const CellBig = styled.span``;
@@ -11,12 +13,8 @@ const RowCell = styled.div``;
 export const CalendarCells = ({
 	current,
 	selected,
-	dateSelected,
-}: {
-	current: Date;
-	selected: Date;
-	dateSelected: (day: Date) => void;
-}) => {
+	onDateSelected,
+}: CalendarCellsProps) => {
 	const monthStart = datefns.startOfMonth(current);
 	const monthEnd = datefns.endOfMonth(monthStart);
 	const startDate = datefns.startOfWeek(monthStart);
@@ -43,7 +41,7 @@ export const CalendarCells = ({
 							: ""
 					}`}
 					key={day.toDateString()}
-					onClick={dateSelected.bind(null, datefns.parse(cloneDay))}
+					onClick={onDateSelected.bind(null, datefns.parse(cloneDay))}
 				>
 					<CellNumber>{formattedDate}</CellNumber>
 					<CellBig>{formattedDate}</CellBig>

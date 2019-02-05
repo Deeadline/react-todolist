@@ -1,6 +1,8 @@
 import React from "react";
 import datefns from "date-fns";
-import styled from "styled-components";
+import styled from "../../utils/theme";
+
+import { CalendarHeaderProps } from "../../interfaces/calendar.interface";
 
 const Header = styled.header`
 	display: grid;
@@ -19,19 +21,15 @@ const PreviousButton = styled.button`
 `;
 
 export const CalendarHeader = ({
-	prev,
+	previous,
 	current,
 	next,
-}: {
-	prev: () => void;
-	current: Date;
-	next: () => void;
-}) => {
+}: CalendarHeaderProps) => {
 	const dateFormat = "MMMM YYYY";
 	return (
 		<Header>
 			<Previous>
-				<PreviousButton className="icon" onClick={prev.bind(null)}>
+				<PreviousButton className="icon" onClick={previous.bind(null)}>
 					chevron_left
 				</PreviousButton>
 			</Previous>

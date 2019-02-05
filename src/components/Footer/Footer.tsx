@@ -1,8 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "../../utils/theme";
 
 const FooterWrapper = styled.footer`
-	background-color: ${({ theme }) => theme.color.secondary};
+	background-color: ${({ theme }) => theme.colors.primary};
+	border-top: 1px solid ${({ theme }) => theme.colors.secondary};
 	padding: 0 1.5rem;
 	height: 30px;
 	display: flex;
@@ -11,6 +12,8 @@ const FooterWrapper = styled.footer`
 `;
 
 const Copyrights = styled.span`
+font-weight: ${({ theme }) => theme.fonts.thin};
+	font-size: 0.8rem;
 	text-align: center;
 `;
 
@@ -19,7 +22,7 @@ const Link = styled.a`
 	text-decoration: none;
 	color: white;
 	&:hover {
-		color: ${({ theme }) => theme.color.buttonHover};
+		color: ${({ theme }) => theme.colors.third};
 	}
 `;
 
