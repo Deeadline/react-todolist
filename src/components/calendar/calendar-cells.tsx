@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "../../utils/theme";
+import styled from "@utils/theme";
 import datefns from "date-fns";
 
-import { CalendarCellsProps } from "../../interfaces/calendar.interface";
+import { CalendarCellsProps } from "@interfaces/calendar.interface";
 
 const Cell = styled.div``;
 const CellBig = styled.span``;

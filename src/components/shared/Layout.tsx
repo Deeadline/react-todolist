@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Theme, createGlobalStyle, ThemeProvider } from "../../utils/theme";
+import { Theme, createGlobalStyle, ThemeProvider } from "@utils/theme";
 
-import { Header } from "../Header/header";
-import { Main } from "../Main/main";
-import { Footer } from "../Footer/footer";
-import { Login } from "../Login/login";
-import { Register } from "../Register/register";
+import { Header } from "@components/header/header";
+import { Main } from "@components/main/main";
+import { Footer } from "@components/footer/footer";
+import { Login } from "@components/login/login";
+import { Register } from "@components/register/register";
 
 export const GlobalStyle = createGlobalStyle`
 *,*::after,*::before {

@@ -1,4 +1,4 @@
-import { Colors } from "../interfaces/theme.interface";
+import { Colors } from "@interfaces/theme.interface";
 
 export const colors = {
 	primary: "#222629",

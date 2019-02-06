@@ -1,14 +1,14 @@
 import React, { Component, FormEvent, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
-import styled from "../../utils/theme";
-import { register } from "../../config/firebase";
+import styled from "@utils/theme";
+import { register } from "@config/firebase";
 
-import { initialRegisterState } from "../../interfaces/register.interface";
+import { initialRegisterState } from "@interfaces/register.interface";
 
-import { Form, FormContent, FormWrapper } from "../Shared/form";
-import { Input } from "../Shared/input";
-import { Label } from "../Shared/label";
-import { BigButton, PrimaryButton } from "../Shared/button";
+import { Form, FormContent, FormWrapper } from "@components/shared/form";
+import { Input } from "@components/shared/input";
+import { Label } from "@components/shared/label";
+import { BigButton, PrimaryButton } from "@components/shared/button";
 
 const RegisterText = styled.p`
 	font-weight: ${({ theme }) => theme.fonts.bold};

@@ -1,5 +1,3 @@
-import { number } from "prop-types";
-
 export interface Colors {
 	primary: string; // for main layout
 	secondary: string; // for header, footer and background modals
@@ -10,7 +8,7 @@ export interface Colors {
 export interface Fonts {
 	thin: number;
 	regular: number;
-	semi_bold:number;
+	semi_bold: number;
 	bold: number;
 }
 

@@ -1,5 +1,5 @@
 import React, { ReactChild } from "react";
-import styled from "../../utils/theme";
+import styled from "@utils/theme";
 
 const MainWrapper = styled.main`
 	display: flex;

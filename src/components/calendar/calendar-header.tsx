@@ -1,8 +1,8 @@
 import React from "react";
 import datefns from "date-fns";
-import styled from "../../utils/theme";
+import styled from "@utils/theme";
 
-import { CalendarHeaderProps } from "../../interfaces/calendar.interface";
+import { CalendarHeaderProps } from "@interfaces/calendar.interface";
 
 const Header = styled.header`
 	display: grid;

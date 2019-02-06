@@ -1,4 +1,4 @@
-import styled from "../../utils/theme";
+import styled from "@utils/theme";
 
 export const Input = styled.input`
 	width: 80%;

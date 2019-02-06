@@ -1,4 +1,4 @@
-import { Fonts } from "../interfaces/theme.interface";
+import { Fonts } from "@interfaces/theme.interface";
 
 export const fonts = {
 	thin: 300,
