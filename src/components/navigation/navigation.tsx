@@ -1,7 +1,9 @@
-import React from "react";
-import styled from "@utils/theme";
+import React, { Component } from "react";
+import styled from "../../utils/theme";
 
-import { PrimaryButton } from "@components/shared/button";
+import { PrimaryButton } from "../shared/button";
+import { FirebaseAuthContext } from "../../context/context";
+import { logout } from "../../config/firebase";
 
 const NavigationWrapper = styled.nav`
 	padding: 1rem 0;
@@ -13,12 +15,29 @@ const NavigationList = styled.ul`
 	margin: 0;
 `;
 const NavigationItem = styled.li``;
-export const Navigation = () => (
-	<NavigationWrapper>
-		<NavigationList>
-			<NavigationItem>
-				<PrimaryButton>Logout</PrimaryButton>
-			</NavigationItem>
-		</NavigationList>
-	</NavigationWrapper>
-);
+export class Navigation extends Component {
+	logout = () => {
+		logout();
+	}
+	render() {
+		return (
+			<FirebaseAuthContext.Consumer>
+				{({ isUserSignedIn }) => {
+					if (isUserSignedIn) {
+						return (
+							<NavigationWrapper>
+								<NavigationList>
+									<NavigationItem>
+										<PrimaryButton onClick={this.logout}>
+											Logout
+										</PrimaryButton>
+									</NavigationItem>
+								</NavigationList>
+							</NavigationWrapper>
+						);
+					}
+				}}
+			</FirebaseAuthContext.Consumer>
+		);
+	}
+}

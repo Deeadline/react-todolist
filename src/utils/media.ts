@@ -1,4 +1,4 @@
-import { Media } from "@interfaces/theme.interface";
+import { Media } from "../interfaces/theme.interface";
 
 export const media = {
 	tablet: `@media (min-width: 768px)`,

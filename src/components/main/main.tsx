@@ -1,5 +1,7 @@
-import React, { ReactChild } from "react";
-import styled from "@utils/theme";
+import React, { ReactNode, Component } from "react";
+import styled from "../../utils/theme";
+import { FirebaseAuthContext } from "../../context/context";
+import { Redirect } from "react-router";
 
 const MainWrapper = styled.main`
 	display: flex;
@@ -11,6 +13,18 @@ const MainWrapper = styled.main`
 	}
 	padding: 2rem 1rem 1rem;
 `;
-export const Main = ({ children }: { children: ReactChild[] }) => (
-	<MainWrapper>{children}</MainWrapper>
-);
+export class Main extends Component<{}> {
+	render(): ReactNode {
+		const { children } = this.props;
+		return (
+			<FirebaseAuthContext.Consumer>
+				{({ isUserSignedIn }) => {
+					if (isUserSignedIn) {
+						return <MainWrapper>{children}</MainWrapper>;
+					}
+					return <Redirect to="/login" />;
+				}}
+			</FirebaseAuthContext.Consumer>
+		);
+	}
+}

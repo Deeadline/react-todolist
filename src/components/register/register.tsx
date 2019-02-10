@@ -1,14 +1,15 @@
 import React, { Component, FormEvent, ChangeEvent } from "react";
-import { Link } from "react-router-dom";
-import styled from "@utils/theme";
-import { register } from "@config/firebase";
+import { Link, RouteComponentProps } from "react-router-dom";
+import styled from "../../utils/theme";
 
-import { initialRegisterState } from "@interfaces/register.interface";
+import { register } from "../../config/firebase";
 
-import { Form, FormContent, FormWrapper } from "@components/shared/form";
-import { Input } from "@components/shared/input";
-import { Label } from "@components/shared/label";
-import { BigButton, PrimaryButton } from "@components/shared/button";
+import { initialRegisterState } from "../../interfaces/register.interface";
+
+import { Form, FormContent, FormWrapper } from "../shared/form";
+import { Input } from "../shared/input";
+import { BigButton, PrimaryButton } from "../shared/button";
+import { PropsRouter } from "../../interfaces/props-router.interface";
 
 const RegisterText = styled.p`
 	font-weight: ${({ theme }) => theme.fonts.bold};
@@ -24,45 +25,66 @@ const LoginText = styled.p`
 	padding: 0.5rem;
 `;
 
-const LinkButton = styled(Link)`
-	text-decoration: none;
-	margin: 0.5rem;
-`;
-
 type State = typeof initialRegisterState;
 
-type Props = {};
-
-export class Register extends Component<Props, State> {
+export class Register extends Component<PropsRouter, State> {
 	state = initialRegisterState;
 
 	handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();
-		const { email, password, error } = this.state;
-		if (error !== null) {
-			register(email, password).catch(
-				({ message }: { message: string }) => {
+		const { email, password } = this.state;
+		const { history } = this.props;
+
+		if (this.validate()) {
+			register(email, password)
+				.then(x => history.push("/"))
+				.catch(({ message }: { message: string }) => {
 					this.setState({
 						error: message,
 					});
-				}
-			);
+				});
 		}
 	}
 
-	setEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-		this.setState({ email: event.target.value });
+	handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		this.setState({
+			[event.target.name]: event.target.value,
+		} as Pick<State, keyof State>);
 	}
 
-	setPassword = (event: ChangeEvent<HTMLInputElement>): void => {
-		this.setState({ password: event.target.value });
-	}
+	validate = (): boolean => {
+		const { password, confirmPassword } = this.state;
 
-	setConfirmPassword = (event: ChangeEvent<HTMLInputElement>): void => {
-		if (this.state.password !== event.target.value) {
-			this.setState({ error: "Password don't match!" });
+		if (!this.checkPassword(password)) {
+			this.setState({
+				error:
+					"Password must have at least 6 characters, one number, one lowercase and one uppercase letter",
+			});
+			return false;
 		}
-		this.setState({ confirmPassword: event.target.value });
+		if (password !== confirmPassword) {
+			this.setState({
+				error: "Password don't match!",
+			});
+			return false;
+		}
+		return true;
+	}
+
+	checkPassword = (password: string): boolean => {
+		const regexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/);
+		return regexp.test(password);
+	}
+
+	showErrors = () => {
+		const { error } = this.state;
+		if (!!error) {
+			<FormContent>
+				<p>{this.state.error}</p>
+			</FormContent>;
+		} else {
+			return null;
+		}
 	}
 
 	render() {
@@ -71,51 +93,47 @@ export class Register extends Component<Props, State> {
 				<RegisterText>Register to application!</RegisterText>
 				<Form onSubmit={this.handleSubmit}>
 					<FormContent>
-						<Label htmlFor="email">E-mail</Label>
 						<Input
 							id="email"
 							name="email"
-							type="text"
+							type="name"
 							placeholder="Enter email"
 							value={this.state.email}
-							onChange={this.setEmail}
-							required
+							handleChange={this.handleChange}
 						/>
 					</FormContent>
 					<FormContent>
-						<Label htmlFor="password">Password</Label>
 						<Input
-							type="password"
-							name="password"
 							id="password"
-							value={this.state.password}
-							onChange={this.setPassword}
+							name="password"
+							type="password"
 							placeholder="Enter password"
-							required
+							value={this.state.password}
+							handleChange={this.handleChange}
 						/>
 					</FormContent>
 					<FormContent>
-						<Label htmlFor="confirmPassword">Password</Label>
 						<Input
-							type="password"
-							name="confirmPassword"
 							id="confirmPassword"
+							name="confirmPassword"
+							type="password"
+							placeholder="Repeat password"
 							value={this.state.confirmPassword}
-							onChange={this.setConfirmPassword}
-							placeholder="Confirm password"
-							required
+							handleChange={this.handleChange}
 						/>
 					</FormContent>
-					<FormContent />
+					{this.showErrors}
 					<FormContent>
 						<BigButton>Sign Up</BigButton>
 					</FormContent>
 				</Form>
 				<FormContent>
 					<LoginText>Already have account?</LoginText>
-					<LinkButton to="login">
-						<PrimaryButton>Sign In</PrimaryButton>
-					</LinkButton>
+					<PrimaryButton
+						as={props => <Link {...props} to="/login" />}
+					>
+						Sign In
+					</PrimaryButton>
 				</FormContent>
 			</FormWrapper>
 		);

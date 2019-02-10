@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import styled from "@utils/theme";
+import styled from "../../utils/theme";
 
-import { Navigation } from "@components/navigation/navigation";
+import { logout } from "../../config/firebase";
+
+import { Navigation } from "../navigation/navigation";
 
 const HeaderWrapper = styled.header`
 	display: flex;

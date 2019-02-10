@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@utils/theme";
+import styled from "../../utils/theme";
 
 const FooterWrapper = styled.footer`
 	background-color: ${({ theme }) => theme.colors.primary};
