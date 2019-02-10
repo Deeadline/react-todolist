@@ -1,6 +1,6 @@
-import styled from "@utils/theme";
+import styled from "../../utils/theme";
 
-export const Button = styled.button`
+const Button = styled.button`
 	color: ${({ theme }) => theme.colors.primary};
 	cursor: pointer;
 	font-family: inherit;

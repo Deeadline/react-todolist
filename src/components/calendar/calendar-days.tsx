@@ -1,8 +1,7 @@
 import React from "react";
 import datefns from "date-fns";
-import styled from "@utils/theme";
 
-import { CalendarDaysProps } from "@interfaces/calendar.interface";
+import { CalendarDaysProps } from "../../interfaces/calendar.interface";
 
 export const CalendarDays = ({ currentMonth }: CalendarDaysProps) => {
 	const dateFormat = "dddd";

@@ -1,6 +1,10 @@
-import styled from "@utils/theme";
+import React from "react";
 
-export const Input = styled.input`
+import styled from "../../utils/theme";
+
+import { InputValue } from "../../interfaces/input.interface";
+
+export const InputWrapper = styled.input`
 	width: 80%;
 	text-align: center;
 	padding: 0.7rem;
@@ -17,3 +21,29 @@ export const Input = styled.input`
 		opacity: 1;
 	}
 `;
+
+const Label = styled.label`
+	display: none;
+`;
+
+export const Input = ({
+	id,
+	name,
+	type,
+	placeholder,
+	value,
+	handleChange,
+}: InputValue) => (
+	<>
+		<Label htmlFor={name}>{name}</Label>
+		<InputWrapper
+			id={id}
+			name={name}
+			type={type}
+			placeholder={placeholder}
+			value={value}
+			onChange={handleChange}
+			required
+		/>
+	</>
+);

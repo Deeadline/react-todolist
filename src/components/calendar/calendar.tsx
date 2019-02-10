@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import styled from "@utils/theme";
+import styled from "../../utils/theme";
 import datefns from "date-fns";
 
-import { initialCalendarState } from "@interfaces/calendar.interface";
+import { initialCalendarState } from "../../interfaces/calendar.interface";
 
-import { CalendarHeader } from "@components/calendar/calendar-header";
-import { CalendarDays } from "@components/calendar/calendar-days";
-import { CalendarCells } from "@components/calendar/calendar-cells";
+import { CalendarHeader } from "../calendar/calendar-header";
+import { CalendarDays } from "../calendar/calendar-days";
+import { CalendarCells } from "../calendar/calendar-cells";
 
 const CalendarWrapper = styled.section`
 	display: grid;

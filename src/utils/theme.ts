@@ -1,10 +1,10 @@
 import * as styledComponents from "styled-components";
 
-import { ThemeInterface } from "@interfaces/theme.interface";
+import { ThemeInterface } from "../interfaces/theme.interface";
 
-import { colors } from "@utils/colors";
-import { fonts } from "@utils/fonts";
-import { media } from "@utils/media";
+import { colors } from "./colors";
+import { fonts } from "./fonts";
+import { media } from "./media";
 
 export const Theme = ({
 	colors,

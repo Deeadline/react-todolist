@@ -1,14 +1,14 @@
 import React, { Component, FormEvent, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
-import styled from "@utils/theme";
-import { login } from "@config/firebase";
+import styled from "../../utils/theme";
+import { login } from "../../config/firebase";
 
-import { initialLoginState } from "@interfaces/login.interface";
+import { initialLoginState } from "../../interfaces/login.interface";
 
-import { Form, FormContent, FormWrapper } from "@components/shared/form";
-import { Input } from "@components/shared/input";
-import { Label } from "@components/shared/label";
-import { PrimaryButton, BigButton } from "@components/shared/button";
+import { Form, FormContent, FormWrapper } from "../shared/form";
+import { Input } from "../shared/input";
+import { PrimaryButton, BigButton } from "../shared/button";
+import { PropsRouter } from "../../interfaces/props-router.interface";
 
 const LoginText = styled.p`
 	font-weight: ${({ theme }) => theme.fonts.bold};
@@ -38,30 +38,38 @@ const RegisterText = styled.p`
 	padding: 0.5rem;
 `;
 
-const LinkButton = styled(Link)`
-	text-decoration: none;
-	margin: 0.5rem;
-`;
-
 type State = typeof initialLoginState;
 
-type Props = {};
-
-export class Login extends Component<Props, State> {
+export class Login extends Component<PropsRouter, State> {
 	state = initialLoginState;
 
 	handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();
 		const { email, password } = this.state;
-		login(email, password).catch(({ message }: { message: string }) => {
-			return this.setState({ error: message });
-		});
+		const { history } = this.props;
+
+		login(email, password)
+			.then(x => history.push("/"))
+			.catch(({ message }: { message: string }) => {
+				return this.setState({ error: message });
+			});
 	}
-	setEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-		this.setState({ email: event.target.value });
+	handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		this.setState({ [event.target.name]: event.target.value } as Pick<
+			State,
+			keyof State
+		>);
 	}
-	setPassword = (event: ChangeEvent<HTMLInputElement>): void => {
-		this.setState({ password: event.target.value });
+
+	showErrors = () => {
+		const { error } = this.state;
+		if (!!error) {
+			<FormContent>
+				<p>{this.state.error}</p>
+			</FormContent>;
+		} else {
+			return null;
+		}
 	}
 
 	render() {
@@ -70,29 +78,26 @@ export class Login extends Component<Props, State> {
 				<LoginText>Login to application!</LoginText>
 				<Form onSubmit={this.handleSubmit}>
 					<FormContent>
-						<Label htmlFor="email">E-mail</Label>
 						<Input
 							id="email"
 							name="email"
-							type="text"
-							placeholder="Enter login"
+							type="email"
+							placeholder="Enter email"
 							value={this.state.email}
-							onChange={this.setEmail}
-							required
+							handleChange={this.handleChange}
 						/>
 					</FormContent>
 					<FormContent>
-						<Label htmlFor="password">Password</Label>
 						<Input
-							type="password"
-							name="password"
 							id="password"
-							value={this.state.password}
-							onChange={this.setPassword}
+							name="password"
+							type="password"
 							placeholder="Enter password"
-							required
+							value={this.state.password}
+							handleChange={this.handleChange}
 						/>
 					</FormContent>
+					{this.showErrors}
 					<ForgotPassword to="register">
 						Forgot password?
 					</ForgotPassword>
@@ -102,9 +107,11 @@ export class Login extends Component<Props, State> {
 				</Form>
 				<FormContent>
 					<RegisterText>Don't have account?</RegisterText>
-					<LinkButton to="register">
-						<PrimaryButton>Register</PrimaryButton>
-					</LinkButton>
+					<PrimaryButton
+						as={props => <Link {...props} to="/register" />}
+					>
+						Register
+					</PrimaryButton>
 				</FormContent>
 			</FormWrapper>
 		);
