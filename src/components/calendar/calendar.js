@@ -1,41 +1,42 @@
-import React, { Component } from "react";
-import styled from "../../utils/theme";
-import datefns from "date-fns";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import datefns from 'date-fns';
 
-import { initialCalendarState } from "../../interfaces/calendar.interface";
-
-import { CalendarHeader } from "../calendar/calendar-header";
-import { CalendarDays } from "../calendar/calendar-days";
-import { CalendarCells } from "../calendar/calendar-cells";
+import { CalendarHeader } from '../calendar/calendar-header';
+import { CalendarDays } from '../calendar/calendar-days';
+import { CalendarCells } from '../calendar/calendar-cells';
 
 const CalendarWrapper = styled.section`
 	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto auto 1fr;
+	width: 600px;
+	max-height: 400px;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 10% 1fr;
 	grid-gap: 15px;
+	background-color: red;
 `;
 
-type State = typeof initialCalendarState;
-type Props = {};
+export class Calendar extends Component {
+	state = {
+		currentMonth: new Date(),
+		selectedDate: new Date(),
+	};
 
-export class Calendar extends Component<Props, State> {
-	state = initialCalendarState;
-
-	onDateClick = (day: Date) => {
+	onDateClick = day => {
 		this.setState({
 			selectedDate: day,
 		});
-	}
+	};
 	nextMonth = () => {
 		this.setState({
 			currentMonth: datefns.addMonths(this.state.currentMonth, 1),
 		});
-	}
+	};
 	prevMonth = () => {
 		this.setState({
 			currentMonth: datefns.subMonths(this.state.currentMonth, 1),
 		});
-	}
+	};
 	render() {
 		return (
 			<CalendarWrapper>

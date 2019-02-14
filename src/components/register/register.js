@@ -1,15 +1,12 @@
-import React, { Component, FormEvent, ChangeEvent } from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
-import styled from "../../utils/theme";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { register } from "../../config/firebase";
+import { register } from '../../config/firebase';
 
-import { initialRegisterState } from "../../interfaces/register.interface";
-
-import { Form, FormContent, FormWrapper } from "../shared/form";
-import { Input } from "../shared/input";
-import { BigButton, PrimaryButton } from "../shared/button";
-import { PropsRouter } from "../../interfaces/props-router.interface";
+import { Form, FormContent, FormWrapper } from '../shared/form';
+import { Input } from '../shared/input';
+import { BigButton, PrimaryButton } from '../shared/button';
 
 const RegisterText = styled.p`
 	font-weight: ${({ theme }) => theme.fonts.bold};
@@ -25,40 +22,43 @@ const LoginText = styled.p`
 	padding: 0.5rem;
 `;
 
-type State = typeof initialRegisterState;
+export class Register extends Component {
+	state = {
+		email: '',
+		password: '',
+		confirmPassword: '',
+		error: null,
+	};
 
-export class Register extends Component<PropsRouter, State> {
-	state = initialRegisterState;
-
-	handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+	handleSubmit = event => {
 		event.preventDefault();
 		const { email, password } = this.state;
 		const { history } = this.props;
 
 		if (this.validate()) {
 			register(email, password)
-				.then(x => history.push("/"))
-				.catch(({ message }: { message: string }) => {
+				.then(() => history.push('/'))
+				.catch(({ message }) => {
 					this.setState({
 						error: message,
 					});
 				});
 		}
-	}
+	};
 
-	handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+	handleChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
-		} as Pick<State, keyof State>);
-	}
+		});
+	};
 
-	validate = (): boolean => {
+	validate = () => {
 		const { password, confirmPassword } = this.state;
 
 		if (!this.checkPassword(password)) {
 			this.setState({
 				error:
-					"Password must have at least 6 characters, one number, one lowercase and one uppercase letter",
+					'Password must have at least 6 characters, one number, one lowercase and one uppercase letter',
 			});
 			return false;
 		}
@@ -69,23 +69,22 @@ export class Register extends Component<PropsRouter, State> {
 			return false;
 		}
 		return true;
-	}
+	};
 
-	checkPassword = (password: string): boolean => {
+	checkPassword = password => {
 		const regexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/);
 		return regexp.test(password);
-	}
+	};
 
 	showErrors = () => {
 		const { error } = this.state;
-		if (!!error) {
+		return !!error ? (
 			<FormContent>
-				<p>{this.state.error}</p>
-			</FormContent>;
-		} else {
-			return null;
-		}
-	}
+				{' '}
+				<p> {error} </p>
+			</FormContent>
+		) : null;
+	};
 
 	render() {
 		return (
@@ -129,9 +128,7 @@ export class Register extends Component<PropsRouter, State> {
 				</Form>
 				<FormContent>
 					<LoginText>Already have account?</LoginText>
-					<PrimaryButton
-						as={props => <Link {...props} to="/login" />}
-					>
+					<PrimaryButton as={props => <Link {...props} to="/" />}>
 						Sign In
 					</PrimaryButton>
 				</FormContent>

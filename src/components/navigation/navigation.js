@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import styled from "../../utils/theme";
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import { PrimaryButton } from "../shared/button";
-import { FirebaseAuthContext } from "../../context/context";
-import { logout } from "../../config/firebase";
+import { PrimaryButton } from '../shared/button';
+import { FirebaseAuthContext } from '../../context/context';
+import { logout } from '../../config/firebase';
 
 const NavigationWrapper = styled.nav`
 	padding: 1rem 0;
@@ -18,7 +18,7 @@ const NavigationItem = styled.li``;
 export class Navigation extends Component {
 	logout = () => {
 		logout();
-	}
+	};
 	render() {
 		return (
 			<FirebaseAuthContext.Consumer>

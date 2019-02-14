@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import styled from "../../utils/theme";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { logout } from "../../config/firebase";
-
-import { Navigation } from "../navigation/navigation";
+import { Navigation } from '../navigation/navigation';
 
 const HeaderWrapper = styled.header`
 	display: flex;
@@ -17,9 +15,7 @@ const HeaderWrapper = styled.header`
 	border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
 	height: 80px;
 `;
-const LinkMain = styled(Link)`
-	text-decoration: none;
-`;
+
 const Title = styled.h1`
 	text-align: center;
 	font-size: 2rem;
@@ -28,23 +24,18 @@ const Title = styled.h1`
 		&:hover {
 		color: ${({ theme }) => theme.colors.fourth};
 	}
+	text-decoration: none;
 }
 `;
 const TitleApp = styled.span`
 	font-weight: ${({ theme }) => theme.fonts.thin};
 `;
 
-export class Header extends Component {
-	render() {
-		return (
-			<HeaderWrapper>
-				<LinkMain to="/">
-					<Title>
-						TODO<TitleApp>APP</TitleApp>
-					</Title>
-				</LinkMain>
-				<Navigation />
-			</HeaderWrapper>
-		);
-	}
-}
+export const Header = () => (
+	<HeaderWrapper>
+		<Title as={props => <Link {...props} to="/" />}>
+			TODO<TitleApp>APP</TitleApp>
+		</Title>
+		<Navigation />
+	</HeaderWrapper>
+);

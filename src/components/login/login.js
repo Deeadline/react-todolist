@@ -1,14 +1,12 @@
-import React, { Component, FormEvent, ChangeEvent } from "react";
-import { Link } from "react-router-dom";
-import styled from "../../utils/theme";
-import { login } from "../../config/firebase";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { initialLoginState } from "../../interfaces/login.interface";
+import { login } from '../../config/firebase';
 
-import { Form, FormContent, FormWrapper } from "../shared/form";
-import { Input } from "../shared/input";
-import { PrimaryButton, BigButton } from "../shared/button";
-import { PropsRouter } from "../../interfaces/props-router.interface";
+import { Form, FormContent, FormWrapper } from '../shared/form';
+import { Input } from '../shared/input';
+import { PrimaryButton, BigButton } from '../shared/button';
 
 const LoginText = styled.p`
 	font-weight: ${({ theme }) => theme.fonts.bold};
@@ -38,39 +36,36 @@ const RegisterText = styled.p`
 	padding: 0.5rem;
 `;
 
-type State = typeof initialLoginState;
+export class Login extends Component {
+	state = {
+		email: '',
+		password: '',
+		error: null,
+	};
 
-export class Login extends Component<PropsRouter, State> {
-	state = initialLoginState;
-
-	handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+	handleSubmit = event => {
 		event.preventDefault();
 		const { email, password } = this.state;
 		const { history } = this.props;
 
 		login(email, password)
-			.then(x => history.push("/"))
-			.catch(({ message }: { message: string }) => {
+			.then(() => history.push('/calendar'))
+			.catch(({ message }) => {
 				return this.setState({ error: message });
 			});
-	}
-	handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		this.setState({ [event.target.name]: event.target.value } as Pick<
-			State,
-			keyof State
-		>);
-	}
+	};
+	handleChange = event => {
+		this.setState({ [event.target.name]: event.target.value });
+	};
 
 	showErrors = () => {
 		const { error } = this.state;
-		if (!!error) {
+		return !!error ? (
 			<FormContent>
-				<p>{this.state.error}</p>
-			</FormContent>;
-		} else {
-			return null;
-		}
-	}
+				<p>{error}</p>
+			</FormContent>
+		) : null;
+	};
 
 	render() {
 		return (

@@ -1,4 +1,4 @@
-import styled from "../../utils/theme";
+import styled from 'styled-components';
 
 export const FormWrapper = styled.section`
 	display: flex;

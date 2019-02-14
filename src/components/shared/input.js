@@ -1,8 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styled from "../../utils/theme";
-
-import { InputValue } from "../../interfaces/input.interface";
+import styled from 'styled-components';
 
 export const InputWrapper = styled.input`
 	width: 80%;
@@ -26,14 +24,7 @@ const Label = styled.label`
 	display: none;
 `;
 
-export const Input = ({
-	id,
-	name,
-	type,
-	placeholder,
-	value,
-	handleChange,
-}: InputValue) => (
+export const Input = ({ id, name, type, placeholder, value, handleChange }) => (
 	<>
 		<Label htmlFor={name}>{name}</Label>
 		<InputWrapper
