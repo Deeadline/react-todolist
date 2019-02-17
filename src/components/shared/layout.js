@@ -3,12 +3,6 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Theme } from '../../utils/theme';
 import { Container } from './container';
 import { Header } from '../header/header';
-import { Route, Switch } from 'react-router-dom';
-import { PrivateRoute } from '../private-route/private-route';
-import { Home } from '../home/home';
-import { Calendar } from '../calendar/calendar';
-import { Login } from '../login/login';
-import { Register } from '../register/register';
 
 export const GlobalStyle = createGlobalStyle`
 *,*::after,*::before {
@@ -27,20 +21,13 @@ html, body, #root {
 }
 `;
 
-export const Layout = () => {
+export const Layout = ({ children }) => {
 	return (
 		<ThemeProvider theme={Theme}>
 			<>
 				<GlobalStyle />
 				<Header />
-				<Container>
-					<Switch>
-						<PrivateRoute exact path="/" component={Home} />
-						<PrivateRoute path="/calendar" component={Calendar} />
-						<Route path="/login" component={Login} />
-						<Route path="/register" component={Register} />
-					</Switch>
-				</Container>
+				<Container>{children}</Container>
 			</>
 		</ThemeProvider>
 	);

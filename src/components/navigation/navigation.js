@@ -1,43 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { PrimaryButton } from '../shared/button';
-import { FirebaseAuthContext } from '../../context/context';
-import { logout } from '../../config/firebase';
+import NavigationItem from '../navigation/navigation-item';
 
-const NavigationWrapper = styled.nav`
+const Wrapper = styled.nav`
 	padding: 1rem 0;
 `;
 
-const NavigationList = styled.ul`
+const List = styled.ul`
 	list-style: none;
 	padding: 0;
 	margin: 0;
 `;
-const NavigationItem = styled.li``;
-export class Navigation extends Component {
-	logout = () => {
-		logout();
-	};
-	render() {
-		return (
-			<FirebaseAuthContext.Consumer>
-				{({ isUserSignedIn }) => {
-					if (isUserSignedIn) {
-						return (
-							<NavigationWrapper>
-								<NavigationList>
-									<NavigationItem>
-										<PrimaryButton onClick={this.logout}>
-											Logout
-										</PrimaryButton>
-									</NavigationItem>
-								</NavigationList>
-							</NavigationWrapper>
-						);
-					}
-				}}
-			</FirebaseAuthContext.Consumer>
-		);
-	}
-}
+export const Navigation = () => (
+	<Wrapper>
+		<List>
+			<NavigationItem />
+		</List>
+	</Wrapper>
+);
